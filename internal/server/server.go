@@ -3,14 +3,20 @@ package server
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 )
 
-func Server() {
+func Server() error {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(w, "Hello Server")
 
 	})
-	log.Fatal(http.ListenAndServe(":8080", nil))
+
+	err := http.ListenAndServe(":8080", nil)
+
+	if err != nil {
+		// server failed to start
+		return err
+	}
+	return nil
 }
