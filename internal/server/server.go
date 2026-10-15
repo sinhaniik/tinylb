@@ -6,17 +6,14 @@ import (
 	"net/http"
 )
 
-func Server() error {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println(w, "Hello Server")
-
+func Handler() http.Handler {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "Hello Server")
 	})
+	return mux
+}
 
-	err := http.ListenAndServe(":8080", nil)
-
-	if err != nil {
-		// server failed to start
-		return err
-	}
-	return nil
+func Server() error {
+	return http.ListenAndServe(":8080", Handler())
 }

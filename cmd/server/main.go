@@ -1,11 +1,15 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"tinylb/internal/server"
 )
 
 func main() {
-	server.Server()
-	fmt.Println("Server started")
+	err := server.Server()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
 }
